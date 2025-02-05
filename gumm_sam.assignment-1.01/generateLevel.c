@@ -125,11 +125,11 @@ void generateRooms(char map[][COL]) {
     free(positions);
 }
 
-
-void drawCorridor(Position start, Position end, char map[][COL]) {
+void drawCorridor(Position start, Position end, char map[][COL]) {\
+    //TODO: have it not print on room cells
     int row = start.row;
     int col = start.col;
-    // Mark the starting cell as corridor.
+    // Mark the starting cell as corridor. *NEEDS to have it not on the room cells
     map[row][col] = '#';
     
     // First, move vertically until reaching the target row.
@@ -264,8 +264,6 @@ void generateCorridors(char map[][COL]) {
     free(rooms);
 }
 
-
-
 void generateStairs(char map[][COL]) {
     // Up staircases are represented with '<'
     // Down staircases are represented with '>'
@@ -301,7 +299,6 @@ void generateStairs(char map[][COL]) {
     }
 }
 
-
 void generateRock() {
     //have a hardness field to mimic veins of minerals
     //maybe have it look at surrounding cells to determine rock type
@@ -309,11 +306,6 @@ void generateRock() {
     //need to determine what input would be 
     //rock is represented with spaces
 }
-
-// void createRoom(char map[][]) {
-
-// }
-
 
 /*
     REQUIREMENTS:
