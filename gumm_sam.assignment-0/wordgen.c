@@ -1,180 +1,166 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <stdbool.h>
+#include <time.h>
 
-/*NOTES
-    - use a 2d array
-    - remember how to create a string array
-    - pull up ascii chart
-*/
+#define MAX_ATTEMPTS 1000
 
+// Directions:
+// 0 = Right
+// 1 = Down
+// 2 = Diagonal Down
+// 3 = Diagonal Up
 
-/*
-TODO:
-    - second argument is the size of the array
-    - every subsequent arg is a word to be used
-    - You are to write a word search generator in C. Your word search generator will take an unbounded
-number of parameters on the command line. The first parameter will be a positive integer of magnitude 20
-or smaller, giving the number of rows and columns in your desired word search (all generated word search
-puzzles will be square). All remaining parameters are words to be hidden in your puzzle. We will not
-require you to error check your parameters; your program may assume that all parameters are well formed
-(the integer is positive and smaller than 21 and all of the words are composed of letters and are short enough
-to fit in the puzzle).
-Your words should be inserted randomly into valid locations in your puzzle (if you always start at the
-upper left corner, you’re going to generate some pretty boring word search puzzles!). Words may be hidden
-in four directions: diagonal up, rightward, diagonal down, and downward. If, after attempting to insert a
-word in all possible positions and locations, no valid location is found, your generator should terminate with
-a message about which word cannot be fit
-*/
+// Check if a word can be placed in the grid starting at (row, col)
+// in the given direction (dir). Returns true if it is possible, false otherwise.
+bool canPlaceWord(char *grid, int N, const char *word, int row, int col, int dir) {
+    int len = strlen(word);
 
+    // Check boundary depending on direction
+    switch(dir) {
+        case 0: // Right
+            // Must not exceed right boundary
+            if (col + len > N) return false;
+            break;
+        case 1: // Down
+            // Must not exceed bottom boundary
+            if (row + len > N) return false;
+            break;
+        case 2: // Diagonal Down
+            // Must not exceed right or bottom boundary
+            if (col + len > N || row + len > N) return false;
+            break;
+        case 3: // Diagonal Up
+            // row must not go above 0, col must not exceed right boundary
+            // For "up-right" diagonal, the highest row index we can start from is len-1
+            if (col + len > N || row - (len - 1) < 0) return false;
+            break;
+        default:
+            return false;
+    }
 
-int main(int argc, char *argv[]) {   
-    //INITIALIZING VARIABLES
-    time_t seconds;
-    seconds = time(NULL);
-    srand(seconds);
-    int i = 0; //unimportant
-    int memAlloc = 0; //unimportant
-    int magSize = atoi(argv[1]);
-    int wordAmount = 0;
-    while(argv[i]) {
-        printf("%d: \n Contents: %s\n String Length: %zu\n Pointer Size: %lu\n\n", i, argv[i], strlen(argv[i]), sizeof(argv[i]));
-        memAlloc += sizeof(argv[i]) + strlen(argv[i]);
-        i++;
-    } //unimportant
-    printf("magSize: %d\n", magSize); //unimportant
-    printf("magSize memory allocation: %lu\n", sizeof(magSize)); //unimportant
-    printf("Total Mem Allocation: %d\n", memAlloc); //unimportant
-    printf("Hello, The Program has Started...\n"); //unimportant
-    printf("Number of arguments: %d\n", argc); //unimportant
+    // currently only checking for placeholders '.' or matching letters.)
+    for(int i = 0; i < len; i++) {
+        int r = row;
+        int c = col;
+        if (dir == 0) {        // Right
+            c += i;
+        } else if (dir == 1) { // Down
+            r += i;
+        } else if (dir == 2) { // Diagonal Down
+            r += i;
+            c += i;
+        } else if (dir == 3) { // Diagonal Up
+            r -= i;
+            c += i;
+        }
+        char cell = grid[r * N + c];
+        // If it's not '.' and not the same letter, can't place
+        if (cell != '.' && cell != word[i]) {
+            return false;
+        }
+    }
 
-    //CHECKING COMMAND ARGUMENTS FOR ERRORS THEN TAKING VALID WORDS
-    //Number of arguments provided on CL, minus argv[0]
-    int count = argc - 1;
-    if (count < 1) {
-        printf("No arguments provided.\n");
+    return true;
+}
+
+// Place the word in the grid (assumes canPlaceWord returned true).
+void placeWord(char *grid, int N, const char *word, int row, int col, int dir) {
+    int len = strlen(word);
+
+    for(int i = 0; i < len; i++) {
+        int r = row;
+        int c = col;
+        if (dir == 0) {        // Right
+            c += i;
+        } else if (dir == 1) { // Down
+            r += i;
+        } else if (dir == 2) { // Diagonal Down
+            r += i;
+            c += i;
+        } else if (dir == 3) { // Diagonal Up
+            r -= i;
+            c += i;
+        }
+        grid[r * N + c] = word[i];
+    }
+}
+
+int main(int argc, char *argv[]) {
+    // Seed the random number generator
+    srand((unsigned int)time(NULL));
+
+    // Check minimum args: program name + size + at least 1 word
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s <gridSize> <word1> [word2] ...\n", argv[0]);
         return 1;
     }
-    //create and allocate space for array of pointers to contain each string
-    //based on the size of the array of pointers
-    char **arr = malloc(count * sizeof(*arr));
-    if(!arr) {
-        perror("malloc failed for arr");
+
+    // Parse the puzzle size
+    int N = atoi(argv[1]);
+    if (N < 1 || N > 20) {
+        fprintf(stderr, "Error: Grid size must be between 1 and 20.\n");
         return 1;
     }
-    //copy provided words into newly created array
-    //starting at argv[1]
-    for (int i = 0; i < count; i++) {
-        size_t length = strlen(argv[i + 1]);
-        arr[i] = malloc((length + 1) * sizeof(char)); // +1 for '\0'
-        if (!arr[i]) {
-            perror("malloc failed for arr[i]");
+
+    // Number of words to place
+    int wordCount = argc - 2;
+    char **words = &argv[2];
+
+    // Allocate the grid and initialize with '.'
+    char *grid = malloc(N * N * sizeof(char));
+    if (!grid) {
+        perror("malloc failed for grid");
+        return 1;
+    }
+    for (int i = 0; i < N*N; i++) {
+        grid[i] = '.';
+    }
+
+    // Try to place each word
+    for (int w = 0; w < wordCount; w++) {
+        const char *currentWord = words[w];
+        bool placed = false;
+
+        // Attempt up to MAX_ATTEMPTS random placements
+        for (int attempt = 0; attempt < MAX_ATTEMPTS && !placed; attempt++) {
+            int row = rand() % N;
+            int col = rand() % N;
+            int dir = rand() % 4; // one of the 4 directions
+
+            if (canPlaceWord(grid, N, currentWord, row, col, dir)) {
+                // Place it
+                placeWord(grid, N, currentWord, row, col, dir);
+                placed = true;
+            }
+        }
+
+        // If we still haven't placed the word, it means it can't fit
+        if (!placed) {
+            fprintf(stderr, "Could not place the word '%s' in the puzzle.\n", currentWord);
+            free(grid);
             return 1;
         }
-        if(magSize >= strlen(argv[i + 1])) {
-            printf("magSize: %d  wordSize: %ld\n", magSize, strlen(argv[i])); //unimportant
-            strcpy(arr[i], argv[i + 1]);
-            wordAmount++;
-        }
-        else {
-            printf("%s was too large\n", argv[i + 1]);
-            arr[i] = NULL;
-            continue;
-        }
-    }
-    
-    //CREATE AND FILL ARRAY//
-    //ASCII 97-122 (Dec) -> characters
-    printf("Made it to CREATE AND FILL ARRAY\n"); //unimportant
-    int r = magSize;
-    int c = magSize;
-    int gridLength = magSize * magSize;
-    char grid[r][c];
-    char gridLine[gridLength - 1];
-    printf("Rows: [%d]  Columns: [%d]  Line Length: [%d]  Valid Words: [%d]", r, c, gridLength, wordAmount); //unimportant
-    for(int i = 0; i < gridLength; i++) {
-        int pos2 = rand() % (122 + 1 - 97) + 97;
-        gridLine[i] = pos2;
     }
 
-
-
-    //PLACING WORDS IN ARRAY
-    for(int i = 0; i < wordAmount; i++) {
-        int choice = rand() % (2 + 1 - 1) + 1;
-        if(choice == 1) {
-            printf("TOP");
-            int posTop = 0;
-            int wordPos = 0;
-            int moveSpaces = rand() % (gridLength);
-            printf("Spaces to move: %d", moveSpaces);
-            // while(true) {
-            //     int moveSpaces = rand() % (gridLength);
-            //     posTop =- moveSpaces;
-            //     while(gridLine[posTop]) {
-            //         if(gridLine[posTop] == argv[i][wordPos]) {
-            //             printf("THIS WORKS!\n");
-            //             break;
-            //         }
-            //         posTop++;
-            //     }
-            //     // posTop++;
-            // }
-        }
-        else {
-            printf("BOTTOM");
+    // Fill any remaining '.' with random letters (ASCII 97-122 => 'a' to 'z' (IN DEC))
+    for (int i = 0; i < N*N; i++) {
+        if (grid[i] == '.') {
+            grid[i] = (char)(rand() % 26 + 'a');
         }
     }
 
-
-
-
-
-
-
-
-
-
-    
-
-
-    printf("\nSTORED STRINGS:\n");
-    printf("\npointer char array:\n");
-    for (int i = 0; i < count; i++) {
-        printf("arr[%d] = %s\n", i, arr[i]);
-    }
-    printf("\n2D grid:\n");
-    for (int i = 0; i < count; i++) {
-        printf("grid[%d] = %s\n", i, grid[i]);
-    }
-    printf("\n1D grid:\n");
-    for (int i = 0; i < count; i++) {
-        printf("gridLine[%d] = %d\n", i , gridLine[i]);
-    }
-
-
-    printf("\nFilled 1D Grid:\n");
-    int a = 0;
-    int newline = 0;
-    char x;
-    while(a < gridLength) {
-        if(newline == magSize) {
-            printf("\n");
-            newline = 0;
+    // Print the resulting grid
+    printf("\nGenerated Word Search (%dx%d):\n", N, N);
+    for (int r = 0; r < N; r++) {
+        for (int c = 0; c < N; c++) {
+            printf("%c ", grid[r * N + c]);
         }
-        x = (char) gridLine[a];
-        printf("%c ", x);
-        a++;
-        newline++;
+        printf("\n");
     }
-    printf("\n");
 
-    //free allocated memory
-    for (int i = 0; i < count; i++) {
-        free(arr[i]);
-    }
-    free(arr);
+    // Cleanup
+    free(grid);
     return 0;
 }
