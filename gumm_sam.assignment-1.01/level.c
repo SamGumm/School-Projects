@@ -1,19 +1,10 @@
-/*
- * dungeon.c
- *
- * A simple dungeon generator for a roguelike game.
- * Dungeon dimensions: 80 (width) x 21 (height).
- * Rooms: at least 6, minimum room size: 4 (x) x 3 (y).
- * Corridors connect rooms (using L-shaped paths) and do not override room floor.
- * Staircases: one up (<) and one down (>) placed in room floor cells.
- *
- * Compile with: gcc -o dungeon dungeon.c
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include "dungeon.h"
+
+
 
 #define DUNGEON_WIDTH 80
 #define DUNGEON_HEIGHT 21
@@ -35,13 +26,6 @@ typedef struct Room {
     int height;
 } Room;
 
-/*
- * rooms_overlap
- *
- * Returns true if room a and room b “touch” or overlap when considering that
- * there must be at least 1 cell of gap between them. In other words, we expand each
- * room by one cell in every direction and then test for intersection.
- */
 bool rooms_overlap(Room a, Room b) {
     if ((a.x - 1) > (b.x + b.width) || (b.x - 1) > (a.x + a.width))
         return false;
@@ -50,14 +34,6 @@ bool rooms_overlap(Room a, Room b) {
     return true;
 }
 
-/*
- * carve_corridor
- *
- * Carves a corridor between (x1, y1) and (x2, y2) in an L-shaped path.
- * A random decision determines whether to go horizontal then vertical or vice versa.
- * Only rock cells (represented by ' ') are overwritten with corridor cells ('#').
- * Room floor cells ('.') are left unchanged.
- */
 void carve_corridor(char dungeon[DUNGEON_HEIGHT][DUNGEON_WIDTH],
                       int x1, int y1, int x2, int y2) {
     int x, y;
