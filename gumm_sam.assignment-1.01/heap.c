@@ -6,21 +6,24 @@
 #include "heap.h"
 
 struct heap_node {
-  heap_node_t *next;
-  heap_node_t *prev;
-  heap_node_t *parent;
-  heap_node_t *child;
-  void *datum;
-  uint32_t degree;
-  uint32_t mark;
+  heap_node_t *next; //used to maintain the circular nature of the heap
+  heap_node_t *prev; //used to maintain the circular nature of the heap
+  heap_node_t *parent; //pointer to node's parent
+  heap_node_t *child; //pointer to node's child
+  void *datum; //placeholder for whatever data ends up in the node
+  uint32_t degree; //Tracks number of children the node has
+  uint32_t mark; //Used in Fibonacci heaps to indicate whether a node has lost a child. This helps optimize the decrease-key operation
 };
 
+//macro for swapping a value
 #define swap(a, b) ({    \
   typeof (a) _tmp = (a); \
   (a) = (b);             \
   (b) = _tmp;            \
 })
 
+//merges two circular doubly linked lists
+//It’s used when merging the child list of a node with the root list of the heap (for example, when removing the minimum)
 #define splice_heap_node_lists(n1, n2) ({ \
   if ((n1) && (n2)) {                     \
     (n1)->next->prev = (n2)->prev;        \
@@ -30,6 +33,8 @@ struct heap_node {
   }                                       \
 })
 
+
+//Inserts node n into the circular list pointed to by l.
 #define insert_heap_node_in_list(n, l) ({ \
   (n)->next = (l);                        \
   (n)->prev = (l)->prev;                  \
@@ -37,11 +42,14 @@ struct heap_node {
   (l)->prev = (n);                        \
 })
 
+//removes n from its circular doubly-linked list by removing pointers to it
 #define remove_heap_node_from_list(n) ({ \
   (n)->next->prev = (n)->prev;           \
   (n)->prev->next = (n)->next;           \
 })
 
+
+//recursively prints a node and its children with indentation
 void print_heap_node(heap_node_t *n, unsigned indent,
                      char *(*print)(const void *v))
 {
@@ -58,6 +66,8 @@ void print_heap_node(heap_node_t *n, unsigned indent,
   } while (nc != n->child);
 }
 
+
+//prints the heap by iterating over root list
 void print_heap(heap_t *h, char *(*print)(const void *v))
 {
   heap_node_t *n;
@@ -75,6 +85,7 @@ void print_heap(heap_t *h, char *(*print)(const void *v))
   }
 }
 
+//prints out the pointers (addresses) of nodes in a circular list
 void print_heap_node_list(heap_node_t *n)
 {
   heap_node_t *hn;
@@ -91,6 +102,7 @@ void print_heap_node_list(heap_node_t *n)
   printf("\n");
 }
 
+//Initializes a heap structure. The function pointers compare and datum_delete are stored for later use in ordering and cleaning up data
 void heap_init(heap_t *h,
                int32_t (*compare)(const void *key, const void *with),
                void (*datum_delete)(void *))
@@ -101,6 +113,7 @@ void heap_init(heap_t *h,
   h->datum_delete = datum_delete;
 }
 
+//Recursively deletes nodes and their children. It breaks the circular list by setting a pointer to NULL and then walks through the list, freeing each node.
 void heap_node_delete(heap_t *h, heap_node_t *hn)
 {
   heap_node_t *next;
@@ -119,6 +132,8 @@ void heap_node_delete(heap_t *h, heap_node_t *hn)
   }
 }
 
+
+//Cleans up the entire heap by deleting all nodes and resetting the heap structure.
 void heap_delete(heap_t *h)
 {
   if (h->min) {
@@ -129,6 +144,7 @@ void heap_delete(heap_t *h)
   h->compare = NULL;
   h->datum_delete = NULL;
 }
+
 
 heap_node_t *heap_insert(heap_t *h, void *v)
 {
