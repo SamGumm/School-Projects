@@ -1,0 +1,74 @@
+int *ap[]; -> array of pointer to int
+int aa[][]; -> aa is an array of array of int
+int af[](); -> af is an array of functions that return int
+int *fp(); -> fp is a function that returns a pointer to int
+int fa()[]; -> fa is a function that returns an array of int
+int ***x; -> a pointer to a pointer to a pointer to int
+void x[]()[]; -> x is an array of functions that return a void (maybe)
+const char *s1 vs char const *s1 (they are the same)
+
+Unsigned
+only store positive values, work like youd expect (with rollover)
+
+
+Signed
+signed bits are stored using twos complement
+
+3: 
+0000 0011
+
+take the complement:
+1111 1100
+
+add 1:
+1111 1101 (negation)
+^^ that is -3
+
+
+(Remember how to add binary)
+  01010101
++ 10010110
+= 100101011
+
+a float is usually an IEEE 754 floating pointing point number where
+1-bit sign, 8-bit exponent. 23-bit mantissa
+
+the value is $(-1)^s * 2^(e-127) * 1.m$
+
+##Special values
+-> NaN: not a number
+-> +/- infinity
+-> +/- 0
+-> subnormals
+
+##Doubles
+A double is usually : 1-bit sign, 11-bit exponent. 52-bit mantissa
+(look at man limits)
+
+
+#Operators
+int main() {
+    Unsigned char a, b ,c;
+    a = 0xF0; -> 1111 0000
+    b = 0x0F; -> 0000 1111
+
+    //bitwise and
+    c = a & b; -> 0000 0000
+    printf(%u\n", c); -> 0
+
+    //bitwise or (inclusive)
+    c = a | b; -> 1111 1111
+    printf(%u\n", c); -> 255
+
+    //bitwise xor
+    c = a ^ b;
+    printf("%u\n", c);
+
+    //bitwise left shift
+    c = b << 1; -> 0001 1110 (30)
+    printf("%u\n", c);
+
+    //bitwise right shift
+    c = b >> 2; -> 0000 0011 (3)
+    printf("%u\n", c);
+}
