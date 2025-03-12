@@ -1,0 +1,92 @@
+int (**x)[]; -> pointer to a pointer to an array of ints
+int (**x)(); -> pointer to a pointer to a function that returns int
+int *(*x)[]; -> pointer to an array of pointers to int
+int (*x)[][]; -> pointer to an array of arrays of ints
+int (*x)[](); -> pointer to an array of functions that return ints //might cause issues
+
+
+
+/*
+
+1011 - 0101 = 1110
+1110 - 0101 = 1011
+1011 = 0101
+
+
+void swapXOR(int *a, int *b) {
+    if(a == b) { return; }
+    *a = *a ^ *b;
+    *b = *a ^ *b; // Now *b is the original *a
+    *a = *a ^ *b; // Now *a is the original *b
+}
+
+void swapTemp(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    Unsigned char a, b ,c;
+    a = 0xF0; -> 1111 0000
+    b = 0x0F; -> 0000 1111
+
+    //bitwise and
+    c = a & b; -> 0000 0000
+    printf(%u\n", c); -> 0
+
+    //bitwise or (inclusive)
+    c = a | b; -> 1111 1111
+    printf(%u\n", c); -> 255
+
+    //bitwise xor
+    c = a ^ b;
+    printf("%u\n", c);
+
+    //bitwise left shift
+    c = b << 1; -> 0001 1110 (30)
+    c = 20;
+    c <<= 1; -> (40)
+    printf("%u\n", c);
+
+    //bitwise right shift
+    c = b >> 2; -> 0000 0011 (3)
+    c = 20;
+    c >>= 1; -> (10)
+    printf("%u\n", c);
+}
+
+
+
+========================
+#define NPC_SMART    0x00000001 //00000001 bit 0
+#define NPC_TELEPATH 0x00000002 //00000100 bit 1
+#define NPC_INVIS    0x00000004 //10000000 bit 2
+.
+.
+.
+#define NPC_RFIRE    0x00000040 //bit 6
+#define NPC_RCOLD    0x00000080 //bit 7
+
+struct character {
+    unsigned int characteristics;
+};
+
+character -> characteristics = NPC_SMART | NPC_INVIS | NPC_RCOLD;
+
+
+//we can test if they are resistant to cold using:
+
+if (character -> characteristics & NPC_RCOLD) != 0 {
+    do something
+}
+
+        [c source]
+            \/
+        [compiler]
+            \/
+        [object files]
+            \/
+        [linker]
+            \/
+        [executable]

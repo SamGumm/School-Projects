@@ -1,0 +1,71 @@
+nclude <stdio.h>
+#define x 10
+
+#define printfn(x) printf("%s!\n)
+
+int main() {
+    printf(%d\n", x);
+    #ifdef y
+    printf("%d\n%, x);
+    #else
+    printf("y is not defined\n");
+    #endif
+
+    printfn("Hello, World");
+
+    return 0;
+}
+
+
+
+#Concatenation
+
+#define has_characteristic(character, bit)
+((character) -> npc -> characteristics & NPC_##bit)
+
+has_characteristics(c, RCOLD) //this becomes
+((c) -> npc -> characteristics & NPC_RCOLD) //this
+
+
+#stringification
+-> use #
+#define to_string(s) #s
+
+printf("%s\n", to_string(cs_3270));
+
+
+Scope - where in a program a variable is accessible
+
+lifetime - when in a program a variable exists
+
+auto - local to block (this is the default), lifetime is same as that of the function
+
+const - make the variable read-only, doesnt affect scope or lifetime
+
+extern - means that the storage for the variable is created elsewhere; used to export data to other
+    compilation units; only makes sense to use in global scope
+
+static - changes lifetime to be lifetime of the program
+void myfunc() {
+    //int count = 0; doesnt keep track between function calls
+    static int count = 0; //increments between function calls
+    printf("myfunc() has been called %d number of times\n", ++count);
+}
+int main() {
+    for(int i =0; i < 16; i++) {
+        myfunc();
+    }
+}
+//-> on globals, prevents the variable from being exported from the compilation unit (like private)
+
+register - doesnt affect lifetime or scope; asks compiler to try to keep the variable
+    in a register; error to take the address of a variable in register
+volatile - doesnt affect lifetime or scope, tells the compiler that this value could change
+    change out of the control of the normal program flow
+inline - optimization, does not affect lifetime or scope; only for functions; puts the function body
+    inside the caller without a function call (similar to function-type macros)
+restrict - c99, hints to the compiler that for the lifetime of the pointer, no other pointer will be 
+    used to access the objects to which it points
+
+goto - "goto statement considered harmful" by edgar dijkstra, 1968
+    - very discouraged, leads to spaghetti code usually

@@ -4,7 +4,7 @@ int af[](); -> af is an array of functions that return int
 int *fp(); -> fp is a function that returns a pointer to int
 int fa()[]; -> fa is a function that returns an array of int
 int ***x; -> a pointer to a pointer to a pointer to int
-void x[]()[]; -> x is an array of functions that return a void (maybe)
+void x[]()[]; -> x is an array of functions that return an array of void, throws an error
 const char *s1 vs char const *s1 (they are the same)
 
 Unsigned
