@@ -15,7 +15,7 @@ to the differences.
 char *a [] = { "happen␣", "to␣", "make␣", "stop␣", "\"fetch\"␣", "trying␣", };
 int o [] = { 3, 5, 1, 2, 4, 0 };
 for (i = 0; i < 6; i ++) {
-    printf ("%s" , a[o[i ]]);
+    printf ("%s" , a[o[i]]);
 }
 -> prints stop_trying_to_make_"fetch"_happen_
 
@@ -170,7 +170,7 @@ typedef struct list_item {
     void *datum ;
 } list_item_t ;
 
-typedef list_item_t * list_iterator_t; //understand more about this
+typedef list_item_t * list_iterator_t; list_iterator_t is a pointer to list_item_t
 
 typedef struct list {
     list_item_t *head , *tail ;
@@ -190,7 +190,7 @@ list_iterator_t it ;
 (e) *it //---> list_item_t
 (f) (it == li) //---> int (no bools in standard lib)
 (g) l.compare //---> int32_t
-(h) (*it).next -> datum //---> int32_t(*)(const void*)(const void*) //LOOK AT AGAIN FOR SURE
+(h) (*it).next -> datum //---> int32_t(*)(const void*)(const void*) -> answer (void *)
 (i) (&l)[7] //---> struct list --OR-- list_t * //(&l) returns a pointer to the address, then increment 7
 (j) *((char *) li -> datum) //---> char //because we are casting a pointer to a char pointer, then dereferencing
 

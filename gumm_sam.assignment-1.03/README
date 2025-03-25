@@ -1,6 +1,0 @@
-The makefile includes extra flags for debugging, so some of the warnings are immaterial to 
-the general operation of the program. For example, I left in a method for deleting the datum
-of a cell, but I don't actually have it implemented, so the compiler yells a little bit about that.
-Not super sure what else to put here...
-Switched to linux recently, that's a new experience I guess; I'll never upgrade to windows 11 gosh darnit.
-The professors code is crazy to look at, very intimidating.
