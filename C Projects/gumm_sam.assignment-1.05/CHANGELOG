@@ -1,0 +1,57 @@
+Mar 25:
+    - Figuring out how to link ncurses library
+    - Current guideline from stackoverflow, need to replace with C-compliant one
+       "CXX = g++ <--- gcc
+        CXXFLAGS = -g -Wall -pedantic -Iinclude -std=c++17 -O2 -D_XOPEN_SOURCE_EXTENDED <---- replace
+        EXECUTABLE = game
+        OBJECTS = main.o Character.o MC.o NPC.o Potion.o Game.o
+        INC = ./src/include/  <--- replace with actual filepath
+        SRC = $(shell find $(INC) -type f -name '*.cpp') <--- prolly can just remove
+        LDFLAGS = -lncurses -lstdc++fs <--- only need -lncurses to link ncurses
+
+
+        all:    compile run
+
+        compile: $(OBJECTS) 
+            $(CXX) $(CXXFLAGS) -o $(EXECUTABLE) $(OBJECTS) $(LDFLAGS)
+
+        doc: $(SRC)  <--- can get rid of
+            doxygen
+
+        run:
+            ./$(EXECUTABLE)
+
+        clean:
+            rm $(EXECUTABLE) $(OBJECTS)
+
+
+        main.o: ./src/main.cpp
+            $(CXX) $(CXXFLAGS) -c ./src/main.cpp
+
+        Character.o: $(INC)Character.cpp
+            $(CXX) $(CXXFLAGS) -c $(INC)Character.cpp 
+
+        NPC.o: $(INC)NPC.cpp
+            $(CXX) $(CXXFLAGS) -c $(INC)NPC.cpp
+
+        MC.o: $(INC)MC.cpp
+            $(CXX) $(CXXFLAGS) -c $(INC)MC.cpp
+
+        Potion.o: $(INC)Potion.cpp
+            $(CXX) $(CXXFLAGS) -c $(INC)Potion.cpp
+
+        Game.o: $(INC)Game.cpp
+            $(CXX) $(CXXFLAGS) -c $(INC)Game.cpp"
+    - marked methods that need proper descriptions (make it easier on me)
+    - downloaded ncurses library
+        -> linked it to the project through makefile
+    - changed to a round-robin system for handling events
+        -> having issues with the monsters moving to the pc and killing them instantly T_T
+            -> want to evetually implement speed into this, maybe have monsters be able to take more than one move in a turn
+            -> currently the heap event system, while technically working, kills the pc in one or two moves
+                as either the pc goes first, and then the monsters each converge with multiple moves, or
+                converge before the pc can move. not very fun...
+    - finished implementing new methods to utilize ncurses
+    - had some soju
+    - maybe try to come up with a monster, that if on the floor, causes monsters NOT to attack each other?
+    

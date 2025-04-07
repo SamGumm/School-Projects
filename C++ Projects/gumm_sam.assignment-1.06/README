@@ -30,31 +30,39 @@ This project is a roguelike dungeon crawler developed for COM S 3270, Spring 202
 
 ## Requirements
 
-- **Compiler:** GCC
+- **Compiler:** G++
 - **Libraries:**  
   - Ncurses library (install via: `sudo apt-get install libncurses5-dev libncursesw5-dev`)
   - POSIX support for functions like `usleep`. (currently unused)
+  - C Libraries to make porting less painful
+  - Professor's implementation of heap
+  - Algorithm to use std::max
 
 ## Compilation
 
 To compile the project, run:
 
-```bash
-make
-```
+``bash
+make all
+``
+To clean the project, run:
+
+``bash
+make clean
+``
 
 ## Running the Game
 
 Run the game binary from the terminal. You can optionally pass the number of monsters as a command-line argument:
 
 ```bash
-./start [number_of_monsters]
+./dungeon [number_of_monsters]
 ```
 
 For example:
 
 ```bash
-./start 10
+./dungeon 10
 ```
 
 ## Controls / Key Bindings
@@ -77,6 +85,8 @@ For example:
 - **Arrow Keys:** Scroll the monster list (if the list exceeds the screen size)  
 - **Escape:** Exit the monster list  
 - **q:** Quit the game  
+- **f**: Toggles Fog-Of-War (default is on)
+- **g**: Enters into 'teleport' mode, further commands related to this are displayed at the top of the screen when in teleport mode.
 
 ## Gameplay
 

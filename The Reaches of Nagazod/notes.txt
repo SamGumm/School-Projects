@@ -2,3 +2,48 @@ Intent: text-based rpg dungeon-crawler
 theme: old school scifi
 
 NOTES------------------------------------
+
+### Files
+save.cpp --> meant to handle saving and loading
+interface.cpp --> meant to handle generating interface that player looks at
+dungeon_layout.cpp --> handles the actual generation of a floor (random with boundaries)
+dungeon_pop.cpp --> populates the generated floor with loot, monsters, etc.
+game.cpp --> meant to pull everything together and provides game loop logic
+        |
+        +----> needs to be able to handle player input
+
+### Floor Layout Logic
+    - Set number of rooms: 
+    - Max boundaries of each room: 
+    - Max boundary of the floor: 
+    - Boundaries are immutable
+    - some walls can be broken through, some cannot (they lead to space on the other side)
+    - Have airlocks?
+
+### Floor Propogation Logic
+    - Determine amount of loot per floor:
+    - Determine amount of monsters per floor (weaker -> more?): 
+    - Determine relation between placed loot (storage chests?) and monsters (more loot == more monsters?)
+
+### Monster Logic
+    - Types of Monsters (are they monsters?):
+    - Abilities of Monsters:
+    - Do they drop loot? (maybe some):
+    - Is it random chance that an encounter happens?
+        -> Or do they move through the map towards the player?
+        -> Both?
+    - Is there a difficulty curve?
+
+### Loot Logic
+    - Weapons:
+    - Consumables:
+    - Armor:
+
+
+### Player Logic
+
+
+### Visual Appearence of Game
+    - Minimap?
+    - Character Portrait?
+    - Monster Portrait?

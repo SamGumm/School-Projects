@@ -13,5 +13,11 @@ funcptr:
 examprep:
 	gcc -Wall -Wextra -g examprep.c -o prep
 
+examcheck:
+	gcc -Wall -Wextra -g examchecking.c -o examcheck
+
+helloworld:
+	g++ hello_world.cpp -o helloworld
+
 clean:
-	rm -rf *.o intro dll sll prep funcptr
+	rm -rf *.o intro dll sll prep funcptr examcheck helloworld

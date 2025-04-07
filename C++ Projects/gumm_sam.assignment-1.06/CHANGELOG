@@ -1,0 +1,8 @@
+Apr 1:
+    Started porting code over (thank goodness for cstdio)
+    finished porting code, mapped out beginnings of new methods
+
+Apr 2:
+    Fleshed out the fog of war and light radius logic
+    implemented
+    turned in (very tired)

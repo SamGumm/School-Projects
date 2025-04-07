@@ -72,4 +72,27 @@ int main() {
     printBytes(ptr, sizeof(b));
     ptr = &c;
     printBytes(ptr, sizeof(c));
+//START OF EXAM CHECKING
+enum {
+    marty, biff, doc, george, jennifer, libyans
+};
+
+char *car[] = {
+    "81_DeLorean_DMC-12", "46_Ford_Super_De_Luxe", "48_Packard_Custom_Eight_Victoria", "84_BMW_733i", "84_AMC_Eagle_4WD_Wagon", "Volkswagon_Type_2_Microbus"
+};
+
+char character[][15] = {
+    "Marty_McFly", "Biff_Tannen", "Emmet_Brown", "George_McFly", "Jennifer_Parker", "The_Libyans"
+};
+
+char *s = "There's_that_word_again.__\"Heavy\".";
+printf("%s\n", s);
+
+
+
+
+
+
+
+
 }
