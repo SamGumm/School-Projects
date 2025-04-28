@@ -1,0 +1,49 @@
+Jan 20:
+    Started:
+        - created initial directories
+        - settled on potential name -> "The Reaches of Nagazod" (very cool alliteration)
+        - put some notes in about general artistic direction i guess
+
+Apr 7:
+    - it has been a while, remade files with new knowledge gained about cpp
+    - still figuring out how to use OOP with C++
+    - Made the monster class to play around with inheritance and polymorphism
+
+Apr 25:
+    - Remade everything, keeping core concept though
+    - decided to go with manually made dungeon layouts initially
+        - easier and better for story and testing
+    - created the initial hpp files to drive the core of the game
+        - dungeon
+        - object
+        - picture
+        - player
+        - room
+        - save
+        - screen
+        - monster
+    - leaning heavily on the OOP nasture of C++, which i like more
+    - decided to go with a quad linked structure for the dungeon
+        - rooms are a struct with 4 pointers (cardinal directions)
+            - easier to alter later down the line
+        - dungeon is the overall structure, consisting of a starting and ending room, and however many in-between
+        - keeping things simple to start
+    - fleshed out the beginnings of some classes 
+        - Object and its derived classes
+        - Room class
+        - Dungeon class
+    - refactored to increase performance (minusculely)
+        - split large hpp files into hpp and cpp
+
+Apr 26:
+    - Added event tracking to rooms through boolean checks
+    - Cleaned up code from yesterday
+        - the mind slows down...
+
+Apr 27:
+    - Created BFS traversal for the dungeon
+    - fleshed out Dungeon, basic implementation is done
+    - Rooms can connect to each other
+    - A dungeon is multiple rooms strung together
+    - 
+    

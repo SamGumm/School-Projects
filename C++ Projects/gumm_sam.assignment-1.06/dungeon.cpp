@@ -1,4 +1,4 @@
-#include "dungeon.h"
+#include "dungeon.hpp"
 #include <cstdlib>      // for rand, srand, atoi
 #include <cstdio>       // for printf, perror, fprintf
 #include <ctime>        // for time()

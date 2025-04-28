@@ -1,0 +1,18 @@
+RLG327 MONSTER DESCRIPTION 1
+BEGIN MONSTER
+NAME Junior Barbarian
+SYMB p
+COLOR BLUE
+DESC
+This is a junior barbarian. He--or is it she? You can't tell for sure--
+looks like... it should still be in barbarian school. The barbarians are
+putting them in the dungeons young these days. It's wearing dirty, tattered
+cloth armor and wielding a wooden sword. You have a hard time feeling
+intimidated.
+.
+SPEED 7+1d4
+DAM 0+1d4
+HP 12+2d6
+RRTY 100
+ABIL SMART
+END

@@ -1,0 +1,107 @@
+README
+======
+
+RLDungeon — Object & Monster Factory Release (Assignment 1.08/1.09)
+------------------------------------------------------------------
+
+### Contents
+```
+./Makefile
+./generateDungeon.cpp  (entry point)
+./generateDungeon.hpp
+./characters.cpp / .hpp
+./objects.cpp / .hpp            – runtime items -objects.cpp is empty purposefully, left over
+./object_description.hpp
+./object_factory.hpp
+./monster_description.hpp
+./monster_factory.hpp
+./parser.cpp / .hpp             – description loaders
+./dice.cpp / .hpp
+./heap.c / .h                   – given min‑heap (Dijkstra)
+./monster_data.txt              – sample monsters
+./object_data.txt               – sample objects (≥10)
+./utils.hpp
+```
+
+### What’s implemented
+
+* **Factories** for monsters & objects.  
+  *All* dice fields are rolled at instantiation except **damage**.
+* **Uniqueness & rarity**:  
+  * Unique monsters respawn only after death; artifacts never respawn after pickup.  
+  * 4‑step rarity algorithm per spec.
+* **≥ 10 items** spawned each floor; at least `DEFAULT_NMON` monsters.
+* **True fog‑of‑war**: only terrain in memory until within a 5 × 5 light radius.
+* **ncurses colour rendering** (`start_color()`, 7 `init_pair`s, BLACK→WHITE).  
+  Objects are drawn beneath monsters; PC drawn last.
+* **Combat & movement**  
+  * vi keys **y k u h l b j n**, keypad **1‑9**, arrows, `.` / `5` wait.  
+  * Monsters roll attack upon contact with each other and the PC. 
+  * PC operates in similar manner. 
+* **Teleport** (`g`), **fog toggle** (`f`), **stairs** (`.` on `>` and `,` on `<`), **quit** (`q`).
+* **Memory reset** and full cleanup when generating a new level.
+* Optional:
+  * `TUNNEL` monsters bore corridors.
+  * `PASS` monsters ignore rock (no cost).
+  * (PICKUP / DESTROY abilities omitted; extra‑credit only.)
+
+### Build
+
+Requires **g++ ≥ 9** and **ncurses**.
+
+```bash
+$ make        # builds `dungeon`
+```
+Flags: `-std=c++17 -Wall -Wextra -O2`.
+
+Clean objects:
+
+```bash
+$ make clean
+```
+
+### Run
+
+```bash
+$ ./dungeon
+```
+
+Controls (default):
+
+| Key | Action |
+|-----|--------|
+| h j k l y u b n \| Arrow / Num‑pad | Move 8 directions |
+| `5` or `.`                    | Wait one turn |
+| `f`                            | Toggle fog‑of‑war |
+| `g`                            | Teleport mode (`g` confirm, `r` random) |
+| `.` on `>` (`>` stairs)        | Descend level |
+| `,` on `<` (`<` stairs)        | Ascend level |
+| `q`                            | Quit game |
+| 'i'                            | Inventory |
+| 'e'                            | Equipment |
+| 'w'
+
+Wear item: w → choose carry slot → choose equip slot
+
+Take off: t → choose equip slot → placed into free carry slot
+
+Drop item: d → choose carry slot
+
+Destroy item: x → choose carry slot
+
+Inspect item: I → choose carry slot
+
+Look at monster: L → enter targeting mode → description
+
+### Extending
+
+* **Add monsters**: append blocks to `monster_data.txt` following the format.  
+  `RRTY`, `ABIL`, optional `UNIQ` tag.
+* **Add objects**: append blocks to `object_data.txt`.  
+  All eight dice strings required, rarity `RRTY`, optional `ART` tag.
+
+### Known limitations
+
+* `PICKUP`/`DESTROY` monster abilities not yet implemented (optional part).
+* Objects do not stack (`STACK` type ignored).  
+* No persistent floor memory when back‑tracking stairs (spec only requires reset).

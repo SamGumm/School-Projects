@@ -1,0 +1,16 @@
+Apr 14:
+    - Went crazy on the refactoring
+    - Decided to really lean into OOP methodolgy
+    - Broke up lengthy methods into more manageable chunks
+    - made placeholder classes for different objects
+Apr 15:
+    - Started filling out the methods
+    - Still cannot figure out ncurses colors
+    - gave up on ncurses colors
+    - crazy that objects were previously optional but now are needed
+Apr 16:
+    - Kept working on the methods
+    - finally got things to not crash, finished up most of the refactoring
+    - officially moved mostly everything that i wanted to c++ from c
+    - got the project to the point where i am turning this in, cannot take it anymore
+    - still could not get ncurses colors to do anything

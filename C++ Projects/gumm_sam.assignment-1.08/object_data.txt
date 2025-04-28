@@ -1,0 +1,19 @@
+RLG327 OBJECT DESCRIPTION 1
+BEGIN OBJECT
+NAME Gold Coin
+DESC A shiny gold coin.
+.
+TYPE GOLD
+SYMB $
+COLOR YELLOW
+WEIGHT 0+1d1
+HIT 0+0d1
+DAM 0+0d1
+DODGE 0+0d1
+DEF 0+0d1
+ATTR 0+0d1
+VAL 10+0d1
+SPEED 0+0d1
+RRTY 100
+END
+…  <-- add at least 9 more objects

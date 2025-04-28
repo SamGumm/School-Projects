@@ -1,0 +1,9 @@
+Apr 7:
+    - playing around with file reading in c++
+    - decided to make the parser separate from the game logic overall currently
+Apr 8:
+    - made monster class with param-constructor and destructor (more of a placeholder rn)
+Apr 9:
+    - Finished file parsing and reading
+    - endeavored to only use stdc++.h methods
+    - hoping that the file formatting is strict, because program expects that

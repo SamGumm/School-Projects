@@ -1,0 +1,115 @@
+Things to do for the exam:
+    - make own generic vector class
+
+
+Destructor:
+    - called whenever an object goes out of scope or is deleted from the heap
+    - used to free any resources used by the objects
+        - usually means freeing any heap allocated memory used by the object
+        - closing files, network resources
+    - C++ 
+Copy Constructor:
+
+Operator '=':
+
+
+reserve(int): ask vector to preallocate space for i items
+    - huge performance gains
+
+
+""""""""""""""""""""""""""""""
+#ifndef DYNARR_H
+#def DYNNAR_H
+
+#define INITIAL_CAPACITY 20
+
+template <class T> //<-- might also see <typename T> //slow to compile
+class dynarr {
+    private:
+        T *arr;
+        int capacity; //actually size of the area
+        int count;
+
+        void expand() {
+            capacity *= 2;
+            T *temp = new T[capacity];
+            for(int i = 0; i < size; i++) {
+                temp[i] = arr[i];
+            }
+            delete[] arr;
+            arr = temp;
+        }
+
+    public:
+        dynarr() : arr(new T[INITIAL_CAPACITY]), count(0), capacity(INITIAL_CAPACITY) {}
+        dynarr(int size) : arr(new T[size])
+        iterator(dynarr &a) : da(a), loc(a) {}
+        void operator++() {loc++;}
+        void operator(int num) {loc++;}
+        
+
+
+        ~dynarr() {
+            delete[] arr;
+        }
+                      //reference
+        void push_back(T &item) {
+            if(++count == capacity) {
+                expand();
+            }
+            arr[count-1] = item;
+        }
+
+        T &operator[] (int index) {}
+
+        T &pop_back() 
+            (if(count <= 0)) {
+                throw "encountered error";
+            }
+            T temp = arr[--count];
+            return temp;
+        }
+
+        int length() const {
+            return count;
+        }
+
+        class iterator {
+            private:
+                int loc;
+                dynarr &da;
+
+            public:
+                dynarr(dynarr &da) : da(da), loc(0) {}
+                void operator++() {loc++;}
+                T &operator*() {
+                    return da[loc];
+                }
+                bool is_valid() {
+                    return loc >= 0 && loc < da.count;
+                }
+                std::ostream &print(ostream &a) {
+                    o << "[";
+                    for(int i = 0; i < count; i++) {
+                        o <<"]";
+                    }
+                }
+        } 
+        template <class T>
+        std::ostream &operator<<(std::ostream &o, dynarr &da) {
+            da.print()
+        }
+        
+};
+
+int main {
+    dynarr<int> da1;
+    for(int i = 0; i < 100; i++) {
+        da1.push_back(i);
+    }
+    std::cout << da1 << std::endl;
+    dynarr<int>::iterator it(da1);
+    for(; it.is_valid();; ++it) {
+        std::cout << *it << ",";
+    }
+}

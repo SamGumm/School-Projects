@@ -1,0 +1,13 @@
+Apr 23:
+    - Started after exams (should've started sooner T_T)
+    - Fixed ncurses issue
+    - threw head against wall a couple of times
+    - gonna have to take the L on this one
+    - Realized I need to completely move Dungeon class into the hpp file
+        -> this has not been going well at all lmao
+    - Updated the Characters with their new info
+    - restarted like 4 times
+    - ugliest solution possible, everything is gonna happen in generateDungeon.cpp and thats how its gonna be
+    - attacking works, you mainly just run away
+        -> still bad at using the numpad for movement
+    - 

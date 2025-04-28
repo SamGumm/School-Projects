@@ -1,0 +1,11 @@
+Will callers ever need to read or write this directly?
+Yes → maybe public accessor; No → private.
+
+Does the class guarantee a property that could be broken by external writes?
+Yes → keep data private, expose safe functions.
+
+Could I change or drop this member without users noticing?
+Yes → make it private today and future-proof yourself.
+
+Is the class a simple value object with no logic?
+Yes → consider a struct with public fields.
