@@ -1,38 +1,4 @@
-/**
- * There will be an Object base class
- *  - With derived classes:
- *      - Weapon:
- *          - Sword
- *          - Dagger
- *          - Mace
- *      - Armor
- *          - Helmet:
- *              - Bandanna
- *              - Leather Helmet
- *              - Iron Helmet
- *          - Chestpiece
- *              - Shirt
- *              - Leather Chestpiece
- *              - Iron Chestpiece 
- *          - Leggings
- *              - Pants
- *              - Leather Pants
- *              - Iron Grieves
- *          - Gloves
- *              - Fingerless Gloves
- *              - Leather Gloves
- *              - Iron Gauntlets
- *          - Boots
- *              - Shoes
- *              - Leather Boots
- *              - Iron Boots  
- *      - Item 
- *          - Potion
- *          - ...
- */
-
-#ifndef NAGAZOD_OBJECT_HPP
-#define NAGAZOD_OBJECT_HPP
+#pragma once
 
 #include <string>
 #include <vector>
@@ -43,14 +9,12 @@
 class Object {
     public:
         ~Object() = default;
-
+        virtual std::string displayStatBlock() const = 0;
+    
     protected:
         std::string desc_;
         int value_{0};
-        static constexpr int baseSTR_{0};
-        static constexpr int baseWIS_{0};
-        static constexpr int baseDEX_{0};
-
+        static constexpr float baseSTR_{0};
+        static constexpr float baseWIS_{0};
+        static constexpr float baseDEX_{0};
 };
-
-#endif

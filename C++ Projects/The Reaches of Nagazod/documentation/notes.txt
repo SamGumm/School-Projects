@@ -1,5 +1,5 @@
 Intent: text-based rpg dungeon-crawler
-theme: old school scifi
+theme: old school dnd (3e) 
 
 NOTES------------------------------------
 
@@ -47,3 +47,10 @@ game.cpp --> meant to pull everything together and provides game loop logic
     - Minimap?
     - Character Portrait?
     - Monster Portrait?
+
+### Design Decisions
+    - const is used for non-mutator methods
+    - use reference when copying by value is pointless (i.e. const PLAYER_STATS& /*<-- reference*/ stat_block())
+    - [nodiscard] is used for having a compiler check if result is computed but ignored
+    - noexcept -> tells compiler that "this function will not throw any exceptions"
+        - use on accessors (returning a member should not be able to throw)

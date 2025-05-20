@@ -1,4 +1,4 @@
-#include "dungeon_creation/nagazod_dungeon.hpp"
+#include "nagazod_dungeon.hpp"
 
 void Dungeon::delete_room(Room* victim) {
     if(!victim) return;

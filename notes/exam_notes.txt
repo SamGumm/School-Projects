@@ -1,0 +1,95 @@
+1_
+
+a: fine
+
+b: fine  //<output stream> <-- look into
+
+c: string(s) <--- look into
+    //fine, prints both?
+
+d: vector<string>::iterator i = v.begin();...
+    //vector does not work like this
+    //look into iterators and vectors
+    //end points off the back (why?)
+    //make own iterator?
+
+e: fine
+
+f: doesnt catch because its not the same type
+    //look into try_catch
+    //throw is fine
+    //problem is the catch is looking for a string
+    //char const * is what it should be (why?)
+
+2_
+
+//look into template <class T>
+//go over references again
+
+a:  exam_list(const exam_list &other) {
+        //empty
+        if(!other.head) return;
+
+        //2 nodes
+        else if (other.head == other.tail) {
+            exam_list_node *temp = new exam_list_node(other.head->data, nullptr, nullptr);
+            head = tail = temp;
+        }
+
+        //>2 nodes
+        exam_list_node *curr = other.head;
+        for(; curr; curr = curr->next )
+            insert_tail(curr->data)
+
+    } 
+    //copy constructor
+    //const because we are not modifying
+
+b: exam_list_node *curr = head;
+for( ; curr; curr; curr->next) {
+    if(compare(curr->data, d)) return;
+    else {
+        insert_tail(d)
+    }
+}
+//think about refs
+//conservative about types
+//marked consts
+//references
+
+3_
+a: false (typing gives the issue)
+b:  //look into extern
+c: false //name mangling (what is this)
+d: false //write this one at
+e: false
+f: false //can only change return type if covariant 
+g: true
+h: true
+i: false
+j: false (can use malloc and free, do not mix them however) new calls the constructor, malloc does not
+k: false
+l: true //what is dispatch?
+m: true
+n: true
+o: false
+
+
+\*
+class A
+
+class B : A
+// A constructor -> B constructor -> B destructor -> A destructor
+*\
+
+//cout just prints through s
+const char *s = "hello," "world";
+std::cout << s << std::endl;
+
+
+dynamic_cast<target>() -> casting between types in a hierarchy
+static_cast<target>() -> 
+
+//different kinds of new casts
+//box folder
+//assignment operator -> look into and review

@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <panel.h>
 
+//compile with g++ -Wextra -Wall gameloop.cpp -o menu -lncurses -lpanel
+
 class Menu {
 public:
     struct Popup {

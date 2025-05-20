@@ -1,5 +1,4 @@
-#ifndef NAGAZOD_WEAPONS_HPP
-#define NAGAZOD_WEAPONS_HPP
+#pragma once
 
 #include "loot/nagazod_object.hpp"
 
@@ -15,9 +14,13 @@ enum struct Weapon_Material {
 };
 
 struct Material_Stats_Weapon {
-    int strAdd, wisAdd, dexAdd, damAdd, hcAdd;
-    std::string desc;
-    int value;
+    int strAdd {0}; 
+    int wisAdd {0}; 
+    int dexAdd {0}; 
+    int damAdd {0}; 
+    int hcAdd {0};
+    std::string desc {};
+    int value {0};
 };
 
 class Weapon : public Object {
@@ -50,14 +53,16 @@ class Dagger : public Weapon {
     public:
         /* Constructor */
 
-        explicit Dagger(Weapon_Material m);
+        Dagger(Weapon_Material m);
 
         
         /* Getters */
 
+        int strength() const override { return baseSTR_ + daggerStats_.strAdd; }
+        int wis() const override { return baseWIS_ + daggerStats_.wisAdd; }
         int dex() const override { return baseDEX_ + daggerStats_.dexAdd; }
         int dam() const override { return baseDAM_ + daggerStats_.damAdd; }
-        int hit_chance() const override { return baseHC_  + daggerStats_.hcAdd; }
+        int hit_chance() const override { return baseHC_ + daggerStats_.hcAdd; }
 
     private:
     /* Per-model bonuses default */
@@ -76,16 +81,18 @@ inline Material_Stats_Weapon setStatsForMace(Weapon_Material m);
 
 class Mace : public Weapon {
     public:
-    /* Constructor */
-    
-    Mace(Weapon_Material m);
+        /* Constructor */
+        
+        Mace(Weapon_Material m);
 
+        int strength() const override { return baseSTR_ + maceStats_.strAdd; }
         int wis() const override { return baseWIS_ + maceStats_.wisAdd; }
+        int dex() const override { return baseDEX_ + maceStats_.dexAdd; }
         int dam() const override { return baseDAM_ + maceStats_.damAdd; }
         int hit_chance() const override { return baseHC_ + maceStats_.hcAdd; }
 
-        private:
-            const Material_Stats_Weapon maceStats_;
+    private:
+        const Material_Stats_Weapon maceStats_;
 };
 
 
@@ -102,12 +109,12 @@ class Sword : public Weapon {
         Sword(Weapon_Material m);
 
         int strength() const override { return baseSTR_ + swordStats_.strAdd; }
+        int wis() const override { return baseWIS_ + swordStats_.wisAdd; }
+        int dex() const override { return baseDEX_ + swordStats_.dexAdd; }
         int dam() const override { return baseDAM_ + swordStats_.damAdd; }
-        int hit_chance() const override { return baseHC_  + swordStats_.hcAdd; }
+        int hit_chance() const override { return baseHC_ + swordStats_.hcAdd; }
 
     private:
     /* Per-model bonuses default */
         const Material_Stats_Weapon swordStats_;
 };
-
-#endif

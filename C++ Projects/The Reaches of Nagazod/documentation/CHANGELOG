@@ -45,5 +45,29 @@ Apr 27:
     - fleshed out Dungeon, basic implementation is done
     - Rooms can connect to each other
     - A dungeon is multiple rooms strung together
-    - 
+
+Apr 28:
+    - switched stats from int to float to better fit calculation ideas
+    - (mostly) decided on how combat will work
+    - switched back to int stats T_T
+    - got movement logic to work
+    - got equipping to work
+    - fleshed out player
+    - made an object factory for unique objects to be placed in inventory
+    - got the display methods down (for the most part)
+
+Apr 29:
+    - Its 2am T_T thinking about going to bed, but this monster energy is soo tempting
+    - still need to get monster, room event, dice rolling, loot gen, encounter logic, end of lvl logic going
+    - dont even want to think about getting ncurses up and rolling
+        - panels are my archnemesis
+    - main methods to finish most of this stuff are there.
+    - already played around with panels in ncurses, just need to transfer (easier said than done)
+    - so many projects, so little time...
+    - we're so back
+    - #pragma once ur my hero
+    - gave up on multi-panel ncurses, much more complicated (and annoying) than I thought
+    - switched to terminal-based loop for turn-in
+    - threw together an encounter method
+    - going through and adding descriptions and a readme now
     

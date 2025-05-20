@@ -1,4 +1,4 @@
-#include "dungeon_creation/nagazod_room.hpp"
+#include "nagazod_room.hpp"
 #include <iostream>
 
 void Room::linkNorth(Room* r) {

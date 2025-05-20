@@ -1,5 +1,4 @@
-#ifndef NAGAZOD_ITEMS_HPP
-#define NAGAZOD_ITEMS_HPP
+#pragma once
 
 #include "loot/nagazod_object.hpp"
 
@@ -22,11 +21,10 @@ class Item : public Object {
                                     " (value " + std::to_string(value_) +  
                                     ")" +
                                     " Recovered HP: " + std::to_string(hp());
+            return StatBlock;
         }        
     
 };
 class Potion : public Item {
     int hp() const override {return 5;}
 };
-
-#endif
